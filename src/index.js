@@ -1,17 +1,52 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import ReactDOM from 'react-dom';
+import { makeAutoObservable } from "mobx"
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+import './index.scss';
+import App from './App';
+
+
+
+class UsersState {
+  usersArray = []
+  count = 0
+
+  constructor() {
+    makeAutoObservable(this)
+}
+  async getUsers(){
+    const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+
+    const json = await response.json()
+
+    this.usersArray = json
+
+  }
+
+  setCheckedUser(user){
+    this.usersArray = this.usersArray.map(currentUser => currentUser.id === user.id ? ({...currentUser, completed: !currentUser.completed}) : currentUser)
+  }
+
+  increment(){
+    this.count += 1
+  }
+
+  decrement(){
+    this.count -= 1
+  }
+
+
+  get users (){
+    return this.usersArray
+  }
+}
+
+export const usersState = new UsersState()
+
+const root = document.getElementById('root');
+ReactDOM.render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
+  root
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

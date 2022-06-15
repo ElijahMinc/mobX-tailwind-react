@@ -1,0 +1,22 @@
+.parent{
+    /* @apply border border-purple-500 rounded-lg; */
+    @apply m-8 mt-0 shadow-xl;
+
+  &__title{
+    @apply text-3xl font-bold text-white my-6 text-center;
+  }
+
+  &__input{
+    @apply text-white text-base outline-none block w-full bg-white bg-opacity-20 border-r-4 border-r-transparent focus:border-slate-300 py-3 px-4 placeholder:text-slate-300;
+   
+
+    } 
+  
+  input{
+
+   
+  }
+  &__btn{
+    @apply btn-primary duration-300 ease-in;
+  }
+}
